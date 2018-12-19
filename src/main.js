@@ -4,6 +4,8 @@ import router from './router';
 import store from './store';
 import './plugins/iview.js'
 import './iview-variables.less';
+import animate from 'animate.css'
+Vue.use(animate);
 
 Vue.config.productionTip = false;
 

@@ -1,8 +1,21 @@
 <template>
   <div id="app">
-    <keep-alive>
-      <router-view></router-view>
-    </keep-alive>
+    <router-view></router-view>
+    <transition :duration="500" enter-active-class="animated fadeInUp" mode="out-in" appear>
+      <Row :gutter="24" class-name="layout">
+        <Col
+          :sm="{ span: 4}"
+          :md="{ span: 4, offset: 2 }"
+          :lg="{ span: 4, offset: 3 }"
+          class-name="layout-left"
+        >
+          <router-view name="navmenu"></router-view>
+        </Col>
+        <Col :sm="{ span: 16, offset: 0}" :md="{ span: 16, offset: 0 }" :lg="{ span: 15, offset: 0}">
+          <router-view name="main"></router-view>
+        </Col>
+      </Row>
+    </transition>
   </div>
 </template>
 
@@ -17,7 +30,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped lang="less">
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -25,6 +38,18 @@ export default {
   /* text-align: center; */
   color: #2c3e50;
   /* margin-top: 60px; */
+}
+.layout {
+  min-width: 1120px;
+  border: 1px solid #d60e2f;
+  background: #f5f7f9;
+  position: relative; 
+  .layout-left {
+    color: red;
+    // width: 100%;
+    // min-width: 190px;
+    text-align: center;
+  }
 }
 .clearfix::after {
   content: ".";
