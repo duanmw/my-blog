@@ -41,7 +41,7 @@ export default {
 <style scoped lang="less">
 .layout-menu-left {
     width: 100%;
-    min-width: 170px;
+    // min-width: 170px;
     text-align: center;
     >.ivu-menu{
       border-left: 1px solid #DCDEE2;
