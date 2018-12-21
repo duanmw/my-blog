@@ -32,7 +32,6 @@
 export default {
   name: 'NavMenu',
   props: {
-    msg: String,
   },
 };
 </script>
@@ -46,6 +45,7 @@ export default {
     >.ivu-menu{
       border-left: 1px solid #DCDEE2;
       border-bottom: 1px solid #DCDEE2;
+      padding-bottom:14px;
     }
     .layout-logo-left {
       width: 100%;
