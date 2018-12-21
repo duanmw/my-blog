@@ -39,12 +39,19 @@ export default {
         }
       ]
     };
+  },
+  created() {
+    axios({
+      method: "get",
+      url: "/api"
+    }).then(function(res) {
+      console.log(res.data);
+    });
   }
 };
 </script>
 
 <style scoped lang="less">
-
 .clear {
   clear: both;
 }
@@ -54,5 +61,4 @@ export default {
   background: #fff;
   border-radius: 4px;
 }
-
 </style>
