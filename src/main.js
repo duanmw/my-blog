@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import './plugins/fontawesome'
 import './plugins/axios'
 import App from './App.vue';
 import router from './router';
@@ -7,6 +8,7 @@ import './plugins/iview.js'
 import './iview-variables.less';
 import './assets/common.css'
 import animate from 'animate.css'
+import '@fortawesome/fontawesome-free/css/all.min.css'
 Vue.use(animate);
 
 Vue.config.productionTip = false;

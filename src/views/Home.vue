@@ -17,7 +17,7 @@ export default {
   },
   data() {
     return {
-      titleImg: true,
+      
       list: [
         {
           id: 1,
@@ -40,14 +40,7 @@ export default {
       ]
     };
   },
-  created() {
-    axios({
-      method: "get",
-      url: "/api"
-    }).then(function(res) {
-      console.log(res.data);
-    });
-  }
+  
 };
 </script>
 

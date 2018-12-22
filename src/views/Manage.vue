@@ -1,26 +1,34 @@
 <template>
   <div class="wrap">
     <div class="manage">
-      <router-link to="/" tag="Button">Return</router-link>
+      <router-link to="/" tag="Button"><i class="fas fa-home fa-xs"></i> Home</router-link>
       <h2>This is an manage page</h2>
       <Input placeholder="输入搜索" prefix="ios-search" clearable></Input>
-      <Table :data="tableData1" :columns="tableColumns1" disabled-hover stripe>
-        <!-- <template slot-scope="{ row }" slot="name">
+      <br>
+      <br>
+      <transition enter-active-class="animated faldeIn" appear>
+        <Table :data="tableData1" :columns="tableColumns1" disabled-hover stripe>
+          <!-- <template slot-scope="{ row }" slot="name">
       <strong>{{ row.name }}</strong>
-        </template>-->
-        <template slot-scope="{ row }" slot="tags">
-          <Tag v-for="i in row.tags" :key="i" type="border" color="default">{{ i }}</Tag>
-        </template>
-        <!-- <template slot-scope="{ row }" slot="update">
+          </template>-->
+          <template slot-scope="{ row }" slot="tags">
+            <Tag v-for="i in row.tags" :key="i" type="border" color="default">{{ i }}</Tag>
+          </template>
+          <!-- <template slot-scope="{ row }" slot="update">
         {{ row.update | formatDate}}
-        </template>-->
-        <template slot-scope="{ row, index }" slot="action">
-          <router-link to="/article" tag="div" class="edit-btn">
-            <Button icon="ios-create-outline" type="success" size="small" @click="edit(index)">编辑</Button>
-          </router-link>
-          <Button icon="md-trash" type="error" size="small" @click="remove(row,index)">删除</Button>
-        </template>
-      </Table>
+          </template>-->
+          <template slot-scope="{ row, index }" slot="action">
+            <router-link to="/article" tag="div" class="edit-btn">
+              <Button type="success" size="small" @click="edit(index)">
+                <i class="fas fa-edit fa-xs"></i>
+                <!-- <fa icon="edit"></fa> -->
+                编辑
+              </Button>
+            </router-link>
+            <Button icon="md-trash" type="error" size="small" @click="remove(row,index)">删除</Button>
+          </template>
+        </Table>
+      </transition>
       <div style="margin: 10px;overflow: hidden">
         <div style="float: right;">
           <Page :total="100" :current="1" @on-change="changePage"></Page>
@@ -140,10 +148,14 @@ export default {
 
 <style lang="less" scoped>
 .manage {
-  // width: 98%;
+  width: 94%;
   padding: 20px;
-  // margin: 0 auto;
+  margin: 0 auto;
   background-color: #ffffff;
+  .fa-home{
+    // color: #767b86;
+    margin-right: 4px;
+  }
   h2 {
     text-align: center;
   }
@@ -151,6 +163,9 @@ export default {
     .edit-btn {
       display: inline-block;
       margin: 1px 8px 2px 0;
+      .fas {
+        margin-right: 5px;
+      }
     }
     .ivu-btn-success {
       color: #409eff;
