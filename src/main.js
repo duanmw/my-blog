@@ -9,6 +9,14 @@ import './iview-variables.less';
 import './assets/common.css'
 import animate from 'animate.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
+
+import VueQuillEditor from 'vue-quill-editor'
+// require styles
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
+Vue.use(VueQuillEditor, /* { default global options } */)
 Vue.use(animate);
 
 Vue.config.productionTip = false;

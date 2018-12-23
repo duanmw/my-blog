@@ -1,7 +1,9 @@
 <template>
   <div class="wrap">
     <div class="manage">
-      <router-link to="/" tag="Button"><i class="fas fa-home fa-xs"></i> Home</router-link>
+      <router-link to="/" tag="Button">
+        <i class="fas fa-home fa-xs"></i> Home
+      </router-link>
       <h2>This is an manage page</h2>
       <Input placeholder="输入搜索" prefix="ios-search" clearable></Input>
       <br>
@@ -25,7 +27,16 @@
                 编辑
               </Button>
             </router-link>
-            <Button icon="md-trash" type="error" size="small" @click="remove(row,index)">删除</Button>
+            <Poptip
+              popper-class="del-tip"
+              confirm
+              title="您确认删除这条内容吗？"
+              @on-ok="ok(row)"
+              @on-cancel="cancel"
+            >
+              <Button icon="md-trash" type="error" size="small">删除</Button>
+            </Poptip>
+            <!-- <Button icon="md-trash" type="error" size="small" @click="remove(row,index)">删除</Button> -->
           </template>
         </Table>
       </transition>
@@ -86,6 +97,12 @@ export default {
     };
   },
   methods: {
+    ok(item) {
+      this.$Message.info("You click ok" + item);
+    },
+    cancel() {
+      this.$Message.info("You click cancel");
+    },
     edit(item) {},
     remove(item, i) {
       console.log(item, i);
@@ -152,7 +169,7 @@ export default {
   padding: 20px;
   margin: 0 auto;
   background-color: #ffffff;
-  .fa-home{
+  .fa-home {
     // color: #767b86;
     margin-right: 4px;
   }
@@ -167,6 +184,15 @@ export default {
         margin-right: 5px;
       }
     }
+
+    // .del-tip {
+    //   font-size: 16px !important;
+    // }
+    // .ivu-poptip-body {
+    //   .ivu-icon {
+    //     font-size: 18px;
+    //   }
+    // }
     .ivu-btn-success {
       color: #409eff;
       background: #ecf5ff;

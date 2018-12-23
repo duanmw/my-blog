@@ -12,6 +12,8 @@ html,body{
   height:100%;
   
 }
-/* body{
-  height:100%;
-} */
+.line{
+  border-top: 1px solid #cccccc;
+  width: 98%;
+  margin: 6px auto;
+}

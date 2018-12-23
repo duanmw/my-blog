@@ -1,13 +1,23 @@
 <template>
   <div class="layout-menu-left">
     <div class="layout-logo-left">
-       <transition :duration="400" enter-active-class="animated faldeIn" 
-       leave-active-class="animated shake" tag="div" mode="out-in" appear>
-        <div key="sentence" :title="sentence.note" class="sentence" v-if="showSentence">{{sentence.note}}</div>
-        <div key="title" v-else class="title" @click="change">Duan's Notes</div>
-       </transition>
-      <p :title="sentence.content" @click="showSentence=!showSentence">{{sentence.content}}</p>
-      </div>
+      <div class="title" @click="change" onselectstart="return false;">Duan's Notes</div>  
+        <Tooltip placement="bottom" max-width="170">
+         <p class="p-content">{{sentence.content}}</p>
+          <div slot="content"> 
+            <p style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+              <span style="cursor: pointer;padding-right: 6px;">
+                <Icon v-if="isPlaying" type="md-pause" @click="stop" />
+                <Icon v-else type="md-play" @click="play"/>
+              </span>
+              <span style="padding-top:3px;">{{sentence.content}}</span>
+            </p>
+            <div class="line"></div>
+            <p>{{sentence.note}}</p>
+            <audio id="audio" preload="none" :src="sentence.tts" @ended="playEnd"></audio>
+          </div>
+        </Tooltip>
+    </div>
     <Menu :active-name="activeItem" theme="light" width="auto" :open-names="['2']">
       <MenuItem name="home" to="/">
         <Icon type="md-planet" /><span class="m-item">首页</span>
@@ -39,36 +49,73 @@
 export default {
   name: 'NavMenu',
   props: {
-    activeItem:String
+    activeItem:String//选中项
   },
   data(){
     return{
-      showSentence:false,
-      sentence: {},
-      // activeItem:"home"
+      canChange:false,
+      sentence: {
+        content:"Happy every day.",
+        note:"今天也要哈哈哈",
+        tts:""
+      },
+      isPlaying:false
     }
   },
   methods:{
+    /**
+     * 切换“每日一句”
+     */
     change(){
-      let that=this
-      console.log()
-      let randomDate=this.getDateStr(-Math.floor(Math.random()*100+1))
-      axios({
-        method: "get",
-        url: "/api?date="+randomDate
-      }).then(function(res) {
-        console.log(res.data);
-        that.sentence=res.data
-      });
+      if(this.canChange){
+        this.canChange=false
+        this.isPlaying=false//只要切换句子就重置播放状态为false
+        let that=this
+        let randomDate=this.getDateStr(-Math.floor(Math.random()*100+1))
+        axios({
+          method: "get",
+          url: "/api?date="+randomDate
+        }).then(function(res) {
+          that.sentence=res.data
+        });
+        setTimeout(()=>{this.canChange=true},2000)//点击后2s才可再次切换
+      }
     },
+    /**
+     * 获取AddDayCount天后的格式化日期
+     */
     getDateStr(addDayCount=0) { 
-     var dd = new Date(); 
-     dd.setDate(dd.getDate()+addDayCount);//获取AddDayCount天后的日期 
-     var y = dd.getFullYear(); 
-     var m = dd.getMonth()+1;//获取当前月份
-     var d = dd.getDate(); 
-     return y+"-"+m+"-"+d; 
- } 
+      var dd = new Date(); 
+      dd.setDate(dd.getDate()+addDayCount);//获取AddDayCount天后的日期 
+      var y = dd.getFullYear(); 
+      var m = dd.getMonth()+1;//获取当前月份
+      var d = dd.getDate(); 
+      return y+"-"+m+"-"+d; 
+    } ,
+    /**
+     * 播放音频
+     */
+    play(){
+        let audio =document.querySelector('#audio');
+        if(!this.isPlaying){
+            audio.play();
+            this.isPlaying = true;
+        }
+    },
+    /**
+     * 停止音频
+     */
+    stop(){
+        let audio =document.querySelector('#audio');
+        if(this.isPlaying){
+            audio.pause();
+            audio.currentTime = 0;
+            this.isPlaying = false;
+        }
+    },
+    playEnd(){
+      this.isPlaying = false;
+    }
   },
   
   created() {
@@ -79,6 +126,7 @@ export default {
     }).then(function(res) {
       // console.log(res.data);
       that.sentence=res.data
+      that.canChange=true//现在可以改变句子
     });
   }
 };
@@ -97,32 +145,22 @@ export default {
     }
     .layout-logo-left {
       width: 100%;
-      // height: 80px;
-      // line-height: 80px;
       color: #ffffff;
-      border: 1px solid #17233D;
-      background: #17233D;
-      // border-radius: 4px;
-      margin: 0 auto;
-      .sentence{
-        height: 40px;
-        line-height: 40px;
-        font-size: 16px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
+      border: 1px solid #393E46;
+      background: #393E46;  
       .title{
         height: 40px;
+        margin-top: 6px;
         font-size: 26px;
         font-family: 'Milonga', cursive;
         cursor: pointer;
       }
-      p{
+      .p-content{
         font-family: 'Armata', sans-serif;
         color:#DCDEE2;
-        font-size: 14px;
+        font-size: 13px;
         margin-top: 10px;
+        padding: 0 6px 4px;
         cursor: pointer;
       }
     }
