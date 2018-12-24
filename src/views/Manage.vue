@@ -21,7 +21,7 @@
           </template>-->
           <template slot-scope="{ row, index }" slot="action">
             <router-link to="/article" tag="div" class="edit-btn">
-              <Button type="success" size="small" @click="edit(index)">
+              <Button type="primary" size="small" @click="edit(index)">
                 <i class="fas fa-edit fa-xs"></i>
                 <!-- <fa icon="edit"></fa> -->
                 编辑
@@ -193,16 +193,16 @@ export default {
     //     font-size: 18px;
     //   }
     // }
-    .ivu-btn-success {
-      color: #409eff;
-      background: #ecf5ff;
-      border-color: #b3d8ff;
-    }
-    .ivu-btn-success:hover {
-      background: #409eff;
-      border-color: #409eff;
-      color: #fff;
-    }
+    // .ivu-btn-success {
+    //   color: #409eff;
+    //   background: #ecf5ff;
+    //   border-color: #b3d8ff;
+    // }
+    // .ivu-btn-success:hover {
+    //   background: #409eff;
+    //   border-color: #409eff;
+    //   color: #fff;
+    // }
     .ivu-btn-error {
       color: #f56c6c;
       background: #fef0f0;

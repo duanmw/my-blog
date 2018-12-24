@@ -5,8 +5,7 @@ import Tags from './views/Tags.vue';
 import Manage from './views/Manage.vue';
 import Create from './views/Create.vue';
 import NavMenu from './components/NavMenu.vue';
-import Editor from './components/editor.vue';
-// import ed from './components/ed.vue';
+
 
 Vue.use(Router);
 
@@ -37,11 +36,9 @@ export default new Router({
     },
     {
       path: '/create',
-      // name: 'tags',
+      // name: '',
       components: {
-        // default: Create,
-        default: Editor,
-        // default: ed,
+        default: Create,
       }
     },
   ],

@@ -72,10 +72,7 @@ export default {
         this.isPlaying=false//只要切换句子就重置播放状态为false
         let that=this
         let randomDate=this.getDateStr(-Math.floor(Math.random()*100+1))
-        axios({
-          method: "get",
-          url: "/api?date="+randomDate
-        }).then(function(res) {
+        axios.get("/api?date="+randomDate).then(function(res) {
           that.sentence=res.data
         });
         setTimeout(()=>{this.canChange=true},2000)//点击后2s才可再次切换

@@ -17,3 +17,20 @@ html,body{
   width: 98%;
   margin: 6px auto;
 }
+
+.ivu-btn-primary {
+  color: #409eff;
+  background: #ecf5ff;
+  border-color: #b3d8ff;
+}
+.ivu-btn-primary:hover {
+  background: #409eff;
+  border-color: #409eff;
+  color: #fff;
+}
+
+.create .ivu-input-default{
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}

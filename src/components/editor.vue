@@ -13,9 +13,8 @@
 
 <script>
 import hljs from "highlight.js";
-import VueQuillEditor, { Quill } from "vue-quill-editor";
-// import VueQuillEditor from 'vue-quill-editor'
-// import Quill from 'quill'
+import "highlight.js/styles/monokai-sublime.css";
+import { Quill } from "vue-quill-editor";
 import { ImageDrop } from "quill-image-drop-module";
 import ImageResize from "quill-image-resize-module";
 Quill.register("modules/imageDrop", ImageDrop);
@@ -25,9 +24,7 @@ export default {
   data() {
     return {
       name: "register-modules-example",
-      content: `<p>testestest</p>
-                  <br><pre class="ql-syntax" spellcheck="false">const a = 10;<br>const editorOption = { highlight: text => hljs.highlightAuto(text).value };</pre>
-                  <p><strong><em>Or drag/paste an image here.</em></strong></p>`,
+      content: "",
       editorOption: {
         modules: {
           toolbar: [
@@ -57,14 +54,15 @@ export default {
             },
             modules: ["Resize", "DisplaySize", "Toolbar"]
           }
-        }
+        },
+        placeholder: "请输入内容..."
       }
     };
   },
   mounted() {
-    this.content =
-      `<p><strong><em>Click on the Image Below to resize!</em></strong></p><br>` +
-      this.content;
+    // this.content =
+    //   `<p><strong><em>Click on the Image Below to resize!</em></strong></p><br>` +
+    //   this.content;
   },
   computed: {
     // contentCode() {
@@ -81,45 +79,19 @@ export default {
     onEditorChange({ editor, html, text }) {
       //编辑器文本发生变化
       //this.content可以实时获取到当前编辑器内的文本内容
-      console.log(this.content);
+      // console.log(this.content);
+      this.$emit("getData", this.content);
     }
   }
 };
 </script>
 
-<style>
-/* .quill-editor:not(.bubble) .ql-container,
-.quill-editor:not(.bubble) .ql-container .ql-editor {
-  height: 30rem;
-  padding-bottom: 1rem;
-} */
-</style>
-
 <style lang="less" scoped>
-.quill-editor {
-  width: 96%;
-  height: 10rem;
-  margin: 0 auto;
-  .ql-container .ql-editor {
-    // height: 10rem !important;
+.my-editor {
+  .quill-editor {
+    height: 22rem;
+    padding-bottom: 3rem;
+    margin: 15px auto 5px;
   }
 }
-
-// .quill-editor,
-// .quill-code {
-//   width: 50%;
-//   float: left;
-// }
-// .quill-code {
-//   height: auto;
-//   border: none;
-//   > .title {
-//     border: 1px solid #ccc;
-//     border-left: none;
-//     height: 3em;
-//     line-height: 3em;
-//     text-indent: 1rem;
-//     font-weight: bold;
-//   }
-// }
 </style>
