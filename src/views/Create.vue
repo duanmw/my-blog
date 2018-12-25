@@ -24,7 +24,7 @@
             <!-- </div> -->
           </Col>
         </Row>
-        <Input v-model="title" class="title" placeholder="输入标题" autofocus clearable></Input>
+        <Input v-model="title" class="title" :maxlength="20" placeholder="输入标题" autofocus clearable></Input>
         <br>
         <!-- <transition enter-active-class="animated faldeIn" appear></transition> -->
         <Editor @getData="getData"></Editor>
@@ -85,15 +85,16 @@ export default {
           this.$Message.warning("内容为空！");
         } else {
           console.log("savedata:", this.content);
-          axios
-            .post("/addArticle", {
-              title: this.title,
-              tags: this.tags,
-              content: this.content
-            })
-            .then(function(res) {
-              console.log("adddata",res.data);
-            });
+          this.setContent(this.content);
+          // axios
+          //   .post("/addArticle", {
+          //     title: this.title,
+          //     tags: this.tags,
+          //     content: this.content
+          //   })
+          //   .then(function(res) {
+          //     console.log("adddata",res.data);
+          //   });
           //post ...title,tags,content,createtime,updatetime
           //if success
           this.$Message.success("保存成功！");

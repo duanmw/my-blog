@@ -10,6 +10,7 @@ module.exports = {
   lintOnSave: false,
 
   devServer: {
+    port:8081,
     proxy: { // 配置跨域
       '/api': {
         //target要访问的跨域的api的域名

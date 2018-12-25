@@ -29,7 +29,7 @@ export default {
         modules: {
           toolbar: [
             ["bold", "italic", "underline"], //加粗，斜体，下划线
-            [{ header: [1, 2, 3, 4, 5, false] }], //几级标题
+            [{ header: [1, 2, 3, false] }], //几级标题
             ["blockquote", "code-block"], //引用，代码块
             [{ list: "ordered" }, { list: "bullet" }], //列表
             [{ indent: "-1" }, { indent: "+1" }], // 缩进

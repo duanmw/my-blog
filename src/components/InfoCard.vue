@@ -7,20 +7,20 @@
           {{i.title}}
         </p>
         <p slot="extra">updated by
-          <Icon type="ios-contact"></Icon>2018/12/12 12:00
+          <Icon type="ios-contact"></Icon>{{i.create_time}}
         </p>
         <div v-if="titleImg" class="img-box"></div>
         <div class="content-box" :class="{ 'have-img': titleImg }">
           <Row class-name="tag-row">
             <Col span="24">
               <span>标签：</span>
-              <Tag v-for="it in i.tag" :key="it" color="blue">{{it}}</Tag>
+              <Tag v-for="it in i.tags" :key="it" color="blue">{{it}}</Tag>
               <Tag type="border" color="#FFA2D3">Custom Color</Tag>
             </Col>
           </Row>
           <Row class-name="main-content">
             <Col span="24">
-              <p>{{i.text}}</p>
+              <p>{{i.content}}</p>
             </Col>
           </Row>
           <Row class-name="bottom-content">

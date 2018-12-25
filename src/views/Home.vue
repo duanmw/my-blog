@@ -17,30 +17,62 @@ export default {
   },
   data() {
     return {
-      
       list: [
         {
-          id: 1,
+          id: 0,
           title: "this is title11 title11title11",
-          text: "content akfdmsdlajnvlja",
-          tag: ["vue", "angular", "react"]
-        },
-        {
-          id: 2,
-          title: "this is title22",
-          text: "content akfdmsdlajnvlja",
-          tag: ["vue", "angular", "react"]
-        },
-        {
-          id: 3,
-          title: "this is title33",
-          text: "content akfdmsdlajnvlja",
-          tag: ["vue", "angular", "react"]
+          type: "",
+          tags: ["vue", "angular", "react"],
+          content: "content akfdmsdlajnvlja"
         }
       ]
     };
   },
-  
+  methods: {
+    setContent(content) {
+      let firstIndex, secondIndex,str = "";
+      // var ;
+      for (let i = 1; i <= 3; i++) {
+        firstIndex = content.indexOf("<h" + i + ">");
+        if (firstIndex < 0) continue;
+        secondIndex = content.indexOf("</h" + i + ">", firstIndex + 4);
+        let substr = content.substring(firstIndex + 4, secondIndex);
+        str == "" ? (str = substr) : (str = str + " .. " + substr);
+        str = str.replace("<br>", "");
+        if (str.length >= 15) break;
+      }
+      if (str.length < 15) {
+        firstIndex = content.indexOf("<p>");
+        secondIndex = content.indexOf("</p>", firstIndex + 3);
+        let substr = content.substring(firstIndex + 3, secondIndex);
+        str == "" ? (str = substr) : (str = str + " ... " + substr);
+        str = str.replace("<br>", "");
+      }
+      console.log(str);
+      return str
+      // this.content=str
+    }
+  },
+  created() {
+    let that = this;
+    axios({
+      method: "get",
+      url: "http://localhost:8080/MyBlog/getArticle"
+    }).then(function(res) {
+      console.log(res.data);
+      res.data.forEach(item => {
+        let obj = {};
+        obj.id = item.id;
+        obj.title = item.title;
+        obj.type = item.type;
+        obj.tags = item.tags.split(",");
+        obj.content = that.setContent(item.content);    
+        that.list.push(obj)
+      });
+      // that.sentence=res.data
+      // that.canChange=true//现在可以改变句子
+    });
+  }
 };
 </script>
 
