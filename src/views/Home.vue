@@ -17,20 +17,14 @@ export default {
   },
   data() {
     return {
-      list: [
-        {
-          id: 0,
-          title: "this is title11 title11title11",
-          type: "",
-          tags: ["vue", "angular", "react"],
-          content: "content akfdmsdlajnvlja"
-        }
-      ]
+      list: []
     };
   },
   methods: {
     setContent(content) {
-      let firstIndex, secondIndex,str = "";
+      let firstIndex,
+        secondIndex,
+        str = "";
       // var ;
       for (let i = 1; i <= 3; i++) {
         firstIndex = content.indexOf("<h" + i + ">");
@@ -43,13 +37,14 @@ export default {
       }
       if (str.length < 15) {
         firstIndex = content.indexOf("<p>");
+        if (firstIndex < 0) return str;
         secondIndex = content.indexOf("</p>", firstIndex + 3);
         let substr = content.substring(firstIndex + 3, secondIndex);
         str == "" ? (str = substr) : (str = str + " ... " + substr);
         str = str.replace("<br>", "");
       }
       console.log(str);
-      return str
+      return str;
       // this.content=str
     }
   },
@@ -65,12 +60,21 @@ export default {
         obj.id = item.id;
         obj.title = item.title;
         obj.type = item.type;
-        obj.tags = item.tags.split(",");
-        obj.content = that.setContent(item.content);    
-        that.list.push(obj)
+        item.tags == "" ? (obj.tags = []) : (obj.tags = item.tags.split(","));
+        obj.content = that.setContent(item.content);
+        obj.create_time = item.create_time;
+        obj.update_time = item.update_time;
+        let firstIndex = item.content.indexOf('"data:image');
+        if(firstIndex>=0){
+          let secondIndex = item.content.indexOf('"', firstIndex + 20);
+          let imgstr = item.content.substring(firstIndex+1, secondIndex);
+          console.log(imgstr)
+          obj.img=imgstr
+
+        }
+        // boj.imgtest = substr //testimg
+        that.list.push(obj);
       });
-      // that.sentence=res.data
-      // that.canChange=true//现在可以改变句子
     });
   }
 };

@@ -6,16 +6,27 @@
           <Icon type="md-book"></Icon>
           {{i.title}}
         </p>
-        <p slot="extra">updated by
-          <Icon type="ios-contact"></Icon>{{i.create_time}}
+        <p v-if="i.update_time!=''" slot="extra">updated by
+          <Icon type="ios-contact"></Icon>
+          {{i.update_time}}
         </p>
-        <div v-if="titleImg" class="img-box"></div>
+        <p v-else slot="extra">created by
+          <Icon type="ios-contact"></Icon>
+          {{i.create_time}}
+        </p>
+        <div v-if="titleImg" class="img-box" :style="'background-image:url('+i.img+')'"></div>
         <div class="content-box" :class="{ 'have-img': titleImg }">
           <Row class-name="tag-row">
             <Col span="24">
               <span>标签：</span>
-              <Tag v-for="it in i.tags" :key="it" color="blue">{{it}}</Tag>
-              <Tag type="border" color="#FFA2D3">Custom Color</Tag>
+              <!-- <Tag v-for="it in i.tags" :key="it" color="blue">{{it}}</Tag> -->
+              <Tag
+                v-if="i.tags.length>0"
+                v-for="it in i.tags"
+                :key="it"
+                :color="getRandomColor()"
+              >{{it}}</Tag>
+              <Tag v-if="i.tags.length<=0" type="border">无</Tag>
             </Col>
           </Row>
           <Row class-name="main-content">
@@ -25,15 +36,15 @@
           </Row>
           <Row class-name="bottom-content">
             <Col span="2">
-            <i class="fas fa-eye fa-sm"></i>
+              <i class="fas fa-eye fa-sm"></i>
               1
             </Col>
             <Col span="2">
-              <i class="fas fa-comment-dots fa-sm"></i>2
+              <i class="fas fa-comment-dots fa-sm"></i> 0
               <!-- <fa icon="comment-dots" size="sm"/> -->
             </Col>
             <Col span="8" offset="12">
-              <router-link to="/about" tag="Button">查看全文</router-link>
+              <router-link :to="'/article?title'+i.title" tag="Button">查看全文</router-link>
             </Col>
           </Row>
         </div>
@@ -71,6 +82,9 @@ export default {
     height: 108px;
     border: 1px dotted #cccccc;
     float: left;
+    background-size: contain;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
   }
   .content-box {
     float: left;

@@ -4,6 +4,7 @@ import Home from './views/Home.vue';
 import Tags from './views/Tags.vue';
 import Manage from './views/Manage.vue';
 import Create from './views/Create.vue';
+import Article from './views/Article.vue';
 import NavMenu from './components/NavMenu.vue';
 
 
@@ -39,6 +40,13 @@ export default new Router({
       // name: '',
       components: {
         default: Create,
+      }
+    },
+    {
+      path: '/article',
+      // name: '',
+      components: {
+        default: Article,
       }
     },
   ],

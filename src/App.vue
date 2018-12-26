@@ -26,6 +26,7 @@
         <Col span="24"><router-view></router-view></Col>
       </Row>
     </transition>
+    <BackTop></BackTop>
   </div>
 </template>
 

@@ -34,18 +34,18 @@ export default {
     return {
       model13: "",
       loading1: false,
-      colorArr: [
-        "red",
-        "magenta",
-        "volcano",
-        "orange",
-        "gold",
-        "green",
-        "cyan",
-        "blue",
-        "geekblue",
-        "purple"
-      ],
+      // colorArr: [
+      //   "red",
+      //   "magenta",
+      //   "volcano",
+      //   "orange",
+      //   "gold",
+      //   "green",
+      //   "cyan",
+      //   "blue",
+      //   "geekblue",
+      //   "purple"
+      // ],
       list: ["Alabama", "Alas", "Arizona", "Arkansasf", "bizona", "bcansas"],
       cardlist: [
         {
@@ -82,10 +82,10 @@ export default {
         this.list.unshift(val);
       }
     },
-    getRandomColor() {
-      return this.colorArr[Math.floor(Math.random() * this.colorArr.length)];
-      // return this.colorArr[1]
-    },
+    // getRandomColor() {
+    //   return this.colorArr[Math.floor(Math.random() * this.colorArr.length)];
+    //   // return this.colorArr[1]
+    // },
     shuffle() {
       this.list = _.shuffle(this.list);
     }
