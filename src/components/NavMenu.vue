@@ -27,8 +27,8 @@
         <template slot="title">
           <Icon type="md-filing" /></Icon><span class="m-item2">分类</span>
         </template>
-        <MenuItem name="technology" to="/technology"><Icon type="logo-github" /><span class="m-item2">技术</span></MenuItem>
-        <MenuItem name="movies" to="/movies"><Icon type="md-film" /><span class="m-item2">影视</span></MenuItem>
+        <MenuItem name="technology" to="/tec"><Icon type="logo-github" /><span class="m-item2">技术</span></MenuItem>
+        <MenuItem name="movies" to="/mov"><Icon type="md-film" /><span class="m-item2">影视</span></MenuItem>
       </Submenu>
     
       <MenuItem name="tags" to="/tags">

@@ -21,6 +21,12 @@ Quill.register("modules/imageDrop", ImageDrop);
 Quill.register("modules/imageResize", ImageResize);
 
 export default {
+  props: {
+    contentData: {
+      type: String,
+      default: ""
+    }
+  },
   data() {
     return {
       name: "register-modules-example",
@@ -55,19 +61,9 @@ export default {
             modules: ["Resize", "DisplaySize", "Toolbar"]
           }
         },
-        placeholder: "请输入内容..."
+        placeholder: "写点什么..."
       }
     };
-  },
-  mounted() {
-    // this.content =
-    //   `<p><strong><em>Click on the Image Below to resize!</em></strong></p><br>` +
-    //   this.content;
-  },
-  computed: {
-    // contentCode() {
-    //   // return hljs.highlightAuto(this.content).value
-    // },
   },
   methods: {
     onEditorBlur(editor) {
@@ -82,12 +78,21 @@ export default {
       // console.log(this.content);
       this.$emit("getData", this.content);
     }
+  },
+  watch: {
+    contentData: function(val) {
+      this.content = val;
+    }
+  },
+  mounted() {
+    this.content = this.contentData;
   }
 };
 </script>
 
 <style lang="less" scoped>
 .my-editor {
+  margin-top: 23px;
   .quill-editor {
     height: 22rem;
     padding-bottom: 3rem;

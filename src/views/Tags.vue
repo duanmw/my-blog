@@ -1,7 +1,7 @@
  <template>
   <div class="tags">
     <h1>All Tags</h1>
-    <button v-on:click="shuffle">Shuffle</button>
+    <!-- <button v-on:click="shuffle">Shuffle</button> -->
     <br>
     <transition-group name="list-complete" tag="p" appear>
       <!-- <transition-group enter-active-class="animated bounceInDown" name="list-complete" tag="p" appear> -->
@@ -34,18 +34,6 @@ export default {
     return {
       model13: "",
       loading1: false,
-      // colorArr: [
-      //   "red",
-      //   "magenta",
-      //   "volcano",
-      //   "orange",
-      //   "gold",
-      //   "green",
-      //   "cyan",
-      //   "blue",
-      //   "geekblue",
-      //   "purple"
-      // ],
       list: ["Alabama", "Alas", "Arizona", "Arkansasf", "bizona", "bcansas"],
       cardlist: [
         {
@@ -109,7 +97,7 @@ export default {
   > p {
     width: 50%;
     margin: 0 auto;
-    border: 1px dotted rgb(143, 143, 212);
+    // border: 1px dotted rgb(143, 143, 212);
     border-radius: 10px;
     text-align: center;
     .list-complete-item {
@@ -117,14 +105,9 @@ export default {
       margin: 10px;
     }
   }
-  .list-complete-enter-active,
-  .list-complete-leave-active {
-    // transition: all 1s;
-  }
   .list-complete-enter {
     opacity: 0.5;
   }
-
   .onetag-enter-active,
   .onetag-leave-active {
     transition: all 0.4s;

@@ -20,6 +20,20 @@ Vue.use(VueQuillEditor, /* { default global options } */ )
 Vue.use(animate);
 
 Vue.config.productionTip = false;
+Vue.prototype.renderLoading ={
+  render: h => {
+    return h("div", [
+      h("Icon", {
+        class: "demo-spin-icon-load",
+        props: {
+          type: "ios-loading",
+          size: 30
+        }
+      }),
+      h("div", "Loading")
+    ]);
+  }
+}
 Vue.prototype.getRandomColor = function () {
     let colorArr = ["red", "magenta", "volcano", "orange",
         "gold",

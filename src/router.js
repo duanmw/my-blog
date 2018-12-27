@@ -32,7 +32,6 @@ export default new Router({
       // name: 'manage',
       components: {
         default: Manage,
-        // navmenu: NavMenu
       }
     },
     {
@@ -47,6 +46,22 @@ export default new Router({
       // name: '',
       components: {
         default: Article,
+      }
+    },
+    {
+      path: '/tec',
+      name: 'home',
+      components: {
+        // main: "",
+        navmenu: NavMenu
+      }
+    },
+    {
+      path: '/mov',
+      name: 'home',
+      components: {
+        // main: "",
+        navmenu: NavMenu
       }
     },
   ],

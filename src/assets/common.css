@@ -1,3 +1,6 @@
+html,body{
+  height:100%;
+}
 .clearfix::after {
   content: ".";
   display: block;
@@ -8,9 +11,8 @@
 .clear {
   clear: both;
 }
-html,body{
-  height:100%;
-  
+.align-left{
+  text-align: left;
 }
 .line{
   border-top: 1px solid #cccccc;

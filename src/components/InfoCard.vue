@@ -3,7 +3,7 @@
     <transition-group enter-active-class="animated fadeInUp" tag="p" appear>
       <Card v-for="i in data" :key="i.id" :padding="16">
         <p slot="title">
-          <Icon type="md-book"></Icon>
+          <!-- <Icon type="md-book"></Icon> -->
           {{i.title}}
         </p>
         <p v-if="i.update_time!=''" slot="extra">updated by
@@ -14,8 +14,8 @@
           <Icon type="ios-contact"></Icon>
           {{i.create_time}}
         </p>
-        <div v-if="titleImg" class="img-box" :style="'background-image:url('+i.img+')'"></div>
-        <div class="content-box" :class="{ 'have-img': titleImg }">
+        <div v-if="i.img" class="img-box" :style="'background-image:url('+i.img+')'"></div>
+        <div class="content-box" :class="{ 'have-img': i.img }">
           <Row class-name="tag-row">
             <Col span="24">
               <span>标签：</span>
@@ -35,16 +35,16 @@
             </Col>
           </Row>
           <Row class-name="bottom-content">
-            <Col span="2">
+            <Col span="2" class-name="align-left">
               <i class="fas fa-eye fa-sm"></i>
               1
             </Col>
-            <Col span="2">
+            <Col span="2" class-name="align-left">
               <i class="fas fa-comment-dots fa-sm"></i> 0
               <!-- <fa icon="comment-dots" size="sm"/> -->
             </Col>
             <Col span="8" offset="12">
-              <router-link :to="'/article?title'+i.title" tag="Button">查看全文</router-link>
+              <router-link :to="'/article?title='+i.title" tag="Button">查看全文</router-link>
             </Col>
           </Row>
         </div>
@@ -61,7 +61,7 @@ export default {
   },
   data() {
     return {
-      titleImg: true
+      // titleImg: true
     };
   }
 };
@@ -75,12 +75,16 @@ export default {
     .ivu-card-head p {
       color: #3b404b;
       font-size: 18px;
+      padding-right: 230px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis; /* 溢出的部分用省略号替代*/
     }
   }
   .img-box {
     width: 192px;
     height: 108px;
-    border: 1px dotted #cccccc;
+    border: 1px dotted #dddddd;
     float: left;
     background-size: contain;
     background-position: 50% 50%;
@@ -90,7 +94,7 @@ export default {
     float: left;
     padding-left: 20px;
     width: 100%;
-    .main-content {
+    .main-content p{
       margin: 14px 0;
       white-space: nowrap;
       overflow: hidden;

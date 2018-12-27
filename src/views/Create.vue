@@ -24,17 +24,21 @@
             <!-- </div> -->
           </Col>
         </Row>
-        <Input v-model="title" class="title" :maxlength="30" placeholder="输入标题" autofocus clearable>
+        <Input v-model="title" class="title" :maxlength="30" placeholder="输入标题" clearable>
           <Select v-model="type" slot="prepend" style="width:80px">
             <Option value="tec">技术</Option>
             <Option value="mov">影视</Option>
           </Select>
         </Input>
-        <br>
         <!-- <transition enter-active-class="animated faldeIn" appear></transition> -->
-        <Editor @getData="getData"></Editor>
+        <Editor @getData="getData" :contentData="content"></Editor>
         <div class="save-btn">
-          <Button type="primary" @click="saveContent">保存</Button>
+          <div v-if="updateArticle">
+            <Button type="primary" @click="updateContent">保存更新</Button>
+          </div>
+          <div v-else>
+            <Button type="primary" @click="saveContent">保存</Button>
+          </div>
         </div>
       </div>
     </transition>
@@ -57,10 +61,12 @@ export default {
     return {
       inputVisible: false,
       inputValue: "",
+      id: "",
       type: "tec",
       title: "",
       tags: [],
-      content: ""
+      content: "",
+      updateArticle: false
     };
   },
   methods: {
@@ -91,20 +97,7 @@ export default {
         if (this.content.trim() == "") {
           this.$Message.warning("内容为空！");
         } else {
-          this.$Spin.show({
-            render: h => {
-              return h("div", [
-                h("Icon", {
-                  class: "demo-spin-icon-load",
-                  props: {
-                    type: "ios-loading",
-                    size: 22
-                  }
-                }),
-                h("div", "Loading")
-              ]);
-            }
-          });
+          this.$Spin.show(this.renderLoading);
           // console.log("savedata:", this.content);
           // this.setContent(this.content);
           var data = qs.stringify({
@@ -129,15 +122,76 @@ export default {
               if (res.status == "200") {
                 that.$Message.success(res.data.msg);
                 setTimeout(function() {
-                  that.$Message.success({
-                    content:
-                      '您可以立即  <a href="#/article?title=' +
-                      that.title +
-                      '">前往查看</a>',
-                    duration: 3.5,
-                    closable: true
+                  that.$Modal.confirm({
+                    title: "前往查看",
+                    content: "<p>文章保存成功，是否立即前往查看？</p>",
+                    width: 340,
+                    onOk: () => {
+                      that.$router.push({
+                        path: "/article?title=" + that.title
+                      });
+                    },
+                    onCancel: () => {
+                      // that.$Message.info('点击了取消')
+                    }
                   });
-                }, 200);
+                }, 700);
+              } else that.$Message.error(res.data.msg);
+            })
+            .catch(function(res) {
+              console.log(res);
+              that.$Message.warnning("遇到问题");
+            });
+        }
+      }
+    },
+    updateContent() {
+      if (this.title.trim() == "") {
+        this.$Message.warning("标题不能为空！");
+      } else {
+        if (this.content.trim() == "") {
+          this.$Message.warning("内容为空！");
+        } else {
+          this.$Spin.show(this.renderLoading);
+          // console.log("savedata:", this.content);
+          // this.setContent(this.content);
+          var data = qs.stringify({
+            id: this.id,
+            title: this.title,
+            type: this.type,
+            tags: this.tags.join(","),
+            content: this.content,
+            update_time: this.formatDate()
+          });
+          let that = this;
+          axios({
+            method: "post",
+            // url: '/api/addArticle',
+            url: "http://localhost:8080/MyBlog/updateArticle",
+            data: data,
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded"
+            }
+          })
+            .then(function(res) {
+              that.$Spin.hide();
+              if (res.status == "200") {
+                that.$Message.success(res.data.msg);
+                setTimeout(function() {
+                  that.$Modal.confirm({
+                    title: "前往查看",
+                    content: "<p>更新文章成功，是否立即前往查看？</p>",
+                    width: 340,
+                    onOk: () => {
+                      that.$router.push({
+                        path: "/article?title=" + that.title
+                      });
+                    },
+                    onCancel: () => {
+                      // that.$Message.info('点击了取消')
+                    }
+                  });
+                }, 700);
               } else that.$Message.error(res.data.msg);
             })
             .catch(function(res) {
@@ -195,6 +249,39 @@ export default {
       this.inputVisible = false;
       this.inputValue = "";
     }
+  },
+  created() {
+    let that = this;
+    if (this.$route.query.id) {
+      this.axios
+        .get(
+          "http://localhost:8080/MyBlog/getOneById?id=" + this.$route.query.id
+        )
+        .then(function(res) {
+          that.updateArticle = true;
+          console.log("datas:", res.data);
+          that.id = res.data.id;
+          that.content = res.data.content;
+          that.type = res.data.type;
+          that.title = res.data.title;
+          that.content = res.data.content;
+          if (res.data.tags == "") {
+            that.tags = [];
+          } else {
+            that.tags = res.data.tags.split(",");
+          }
+          // for (let key in res.data) {
+          //   if (res.data.hasOwnProperty(key)) {
+          //     that.obj[key] = res.data[key];
+          //   }
+          // }
+          // if (that.obj.tags == "") {
+          //   that.obj.tags = [];
+          // } else {
+          //   that.obj.tags = that.obj.tags.split(",");
+          // }
+        });
+    }
   }
 };
 </script> 
@@ -222,9 +309,9 @@ export default {
   .title {
     margin-top: 20px;
   }
-  .my-editor {
-    margin-top: 20px;
-  }
+  // .my-editor {
+  //   margin-top: 22px;
+  // }
   .save-btn {
     text-align: center;
   }

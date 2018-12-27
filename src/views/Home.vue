@@ -21,11 +21,10 @@ export default {
     };
   },
   methods: {
-    setContent(content) {
+    setContent(content) {//设置卡片里要显示的文字内容
       let firstIndex,
         secondIndex,
         str = "";
-      // var ;
       for (let i = 1; i <= 3; i++) {
         firstIndex = content.indexOf("<h" + i + ">");
         if (firstIndex < 0) continue;
@@ -45,7 +44,6 @@ export default {
       }
       console.log(str);
       return str;
-      // this.content=str
     }
   },
   created() {
@@ -68,11 +66,9 @@ export default {
         if(firstIndex>=0){
           let secondIndex = item.content.indexOf('"', firstIndex + 20);
           let imgstr = item.content.substring(firstIndex+1, secondIndex);
-          console.log(imgstr)
-          obj.img=imgstr
-
+          // console.log(imgstr)
+          obj.img=imgstr//卡片里要显示的图片
         }
-        // boj.imgtest = substr //testimg
         that.list.push(obj);
       });
     });
