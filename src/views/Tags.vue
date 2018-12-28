@@ -1,34 +1,44 @@
  <template>
-  <div class="tags">
-    <h1>All Tags</h1>
-    <!-- <button v-on:click="shuffle">Shuffle</button> -->
-    <br>
-    <transition-group name="list-complete" tag="p" appear>
-      <!-- <transition-group enter-active-class="animated bounceInDown" name="list-complete" tag="p" appear> -->
-      <Tag
-        v-for="i in list"
-        :key="i"
-        :color="i==model13?'success':getRandomColor()"
-        @click.native="setValue(i)"
-        class="list-complete-item"
-      >{{i}}</Tag>
-    </transition-group>
-    <transition name="onetag">
-      <div v-if="model13">
-        <span>标签：</span>
-        <Tag closable color="success" @on-close="handleClose2" style="margin-left:20px">{{model13}}</Tag>
-      </div>
-    </transition>
-    <InfoCard v-if="model13" :data="cardlist"></InfoCard>
+  <div>
+    <div class="tags">
+      <h1>All Tags</h1>
+      <!-- <button v-on:click="shuffle">Shuffle</button> -->
+      <br>
+      <transition-group name="list-complete" tag="p" appear>
+        <!-- <transition-group enter-active-class="animated bounceInDown" name="list-complete" tag="p" appear> -->
+        <Tag
+          v-for="i in list"
+          :key="i"
+          :color="i==model13?'success':getRandomColor()"
+          @click.native="setValue(i)"
+          class="list-complete-item"
+        >{{i}}</Tag>
+      </transition-group>
+      <transition name="onetag">
+        <div v-if="model13">
+          <span>标签：</span>
+          <Tag
+            closable
+            color="success"
+            @on-close="handleClose2"
+            style="margin-left:20px"
+          >{{model13}}</Tag>
+        </div>
+      </transition>
+      <InfoCard v-if="model13" :data="cardlist"></InfoCard>
+    </div>
+    <Footer></Footer>
   </div>
 </template>
 <script>
 import _ from "lodash/lodash"; // 引入lodash.js
 import InfoCard from "../components/InfoCard.vue";
+import Footer from "../components/Footer.vue";
 export default {
   name: "Tags",
   components: {
-    InfoCard
+    InfoCard,
+    Footer
   },
   data() {
     return {
@@ -87,6 +97,7 @@ export default {
  <style lang="less" scoped>
 .tags {
   min-width: 720px;
+  min-height: 450px;
   padding: 15px;
   overflow: hidden;
   background: #fff;

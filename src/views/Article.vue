@@ -7,7 +7,7 @@
         </router-link>
         <div class="title">{{obj.title}}</div>
         <div class="tag-row">
-          <span>标签：</span>
+          <span>标签：</span><span v-if="obj.tags.length==0">无</span>
           <Tag v-for="it in obj.tags" :key="it" :color="getRandomColor()">{{it}}</Tag>
           <span class="v-line"></span>
           <span class="datetime" v-if="obj.update_time!=''">updated by

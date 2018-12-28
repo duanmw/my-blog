@@ -84,7 +84,7 @@ export default {
   .img-box {
     width: 192px;
     height: 108px;
-    border: 1px dotted #dddddd;
+    // border: 1px dotted #dddddd;
     float: left;
     background-size: contain;
     background-position: 50% 50%;

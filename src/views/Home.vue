@@ -1,6 +1,7 @@
 <template>
   <div class="wrap">
     <div class="layout-content">
+      <p v-if="list.length==0" class="align-center">暂无数据</p>
       <InfoCard :data="list"></InfoCard>
     </div>
     <Footer></Footer>
@@ -40,8 +41,8 @@ export default {
         secondIndex = content.indexOf("</p>", firstIndex + 3);
         let substr = content.substring(firstIndex + 3, secondIndex);
         str == "" ? (str = substr) : (str = str + " ... " + substr);
-        str = str.replace("<br>", "");
       }
+      str = str.replace(/<[^>]+>/g,"")
       console.log(str);
       return str;
     }
@@ -66,7 +67,6 @@ export default {
         if(firstIndex>=0){
           let secondIndex = item.content.indexOf('"', firstIndex + 20);
           let imgstr = item.content.substring(firstIndex+1, secondIndex);
-          // console.log(imgstr)
           obj.img=imgstr//卡片里要显示的图片
         }
         that.list.push(obj);
@@ -81,6 +81,7 @@ export default {
   clear: both;
 }
 .layout-content {
+  min-height: 410px;
   padding: 15px;
   overflow: hidden;
   background: #fff;

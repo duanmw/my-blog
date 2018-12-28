@@ -139,6 +139,12 @@ export default {
         .get("http://localhost:8080/MyBlog/getArticle")
         .then(function(res) {
           that.totalNum = res.data.length;
+            if (that.totalNum == 0) {//无数据清空变量
+            that.tableDataAll = [[]]
+            that.tableData = []
+            that.$Spin.hide()
+            return
+          }
           let pageNum = Math.ceil(that.totalNum / that.pageSize);
           for (let i = 0; i < pageNum; i++) {
             that.tableDataAll[i] = []; //初始化！

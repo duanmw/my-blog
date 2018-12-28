@@ -41,7 +41,7 @@ export default {
             [{ indent: "-1" }, { indent: "+1" }], // 缩进
             [{ align: [] }], //对齐方式
             ["clean"], //清除字体样式
-            ["link", "image", "video"] //链接，上传图片、上传视频
+            ["link", "image"] //链接，上传图片、
           ],
           syntax: {
             highlight: text => hljs.highlightAuto(text).value

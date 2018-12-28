@@ -53,10 +53,10 @@ export default {
         case "/tags":
           this.activeItem="tags"
           break;
-        case "/technology":
+        case "/tec":
           this.activeItem="technology"
           break;
-        case "/movies":
+        case "/mov":
           this.activeItem="movies"
           break;
         default:

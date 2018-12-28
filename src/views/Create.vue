@@ -17,6 +17,7 @@
               v-model="inputValue"
               ref="saveTagInput"
               size="small"
+              :maxlength="10"
               @on-keyup.enter="handleInputConfirm"
               @on-blur="handleInputConfirm"
             ></Input>
@@ -24,7 +25,15 @@
             <!-- </div> -->
           </Col>
         </Row>
-        <Input v-model="title" class="title" :maxlength="30" placeholder="输入标题" clearable>
+        <Input
+          v-model="title"
+          ref="inputTitle"
+          class="title"
+          :maxlength="30"
+          placeholder="输入标题"
+          @on-blur="matchTitle"
+          clearable
+        >
           <Select v-model="type" slot="prepend" style="width:80px">
             <Option value="tec">技术</Option>
             <Option value="mov">影视</Option>
@@ -64,6 +73,7 @@ export default {
       id: "",
       type: "tec",
       title: "",
+      allTitle: [],
       tags: [],
       content: "",
       updateArticle: false
@@ -90,6 +100,15 @@ export default {
     getData(data) {
       this.content = data;
     },
+    matchTitle() {
+      if(this.id==""){
+        if (this.allTitle.includes(this.title)) {
+          this.$Message.error("存在相同标题！请修改");
+          this.$refs.inputTitle.$refs.input.focus();
+        }
+      }
+    },
+
     saveContent() {
       if (this.title.trim() == "") {
         this.$Message.warning("标题不能为空！");
@@ -282,6 +301,15 @@ export default {
           // }
         });
     }
+    this.axios
+      .get("http://localhost:8080/MyBlog/getAllTitle")
+      .then(function(res) {
+        if (res.data) {
+          res.data.forEach(ele => {
+            that.allTitle.push(ele.title);
+          });
+        }
+      });
   }
 };
 </script> 
