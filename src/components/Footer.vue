@@ -15,7 +15,7 @@ export default {
   },
   created(){
     let date=new Date()
-     this.date = date.getFullYear()+"."+(date.getMonth() + 1);
+     this.date = date.getFullYear()+"."+(date.getMonth() + 1)+"."+date.getDate();
   }
 };
 </script>

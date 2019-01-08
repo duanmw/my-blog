@@ -1,42 +1,55 @@
 <template>
   <div class="card-box">
-    <transition-group enter-active-class="animated fadeInUp"  tag="p" appear>
-    <Card v-for="i in data" :key="i.id" :padding="16">
-      <p slot="title">
-        <Icon type="md-book"></Icon>
-        {{i.title}}
-      </p>
-      <p slot="extra">updated by
-        <Icon type="ios-contact"></Icon>2018/12/12 12:00
-      </p>
-      <div v-if="titleImg" class="img-box"></div>
-      <div class="content-box" :class="{ 'have-img': titleImg }">
-        <Row class-name="tag-row">
-          <Col span="24">
-            <span>标签：</span>
-            <Tag v-for="it in i.tag" :key="it" color="blue">{{it}}</Tag>
-            <Tag type="border" color="#FFA2D3">Custom Color</Tag>
-          </Col>
-        </Row>
-        <Row class-name="main-content">
-          <Col span="24">
-            <p>{{i.text}}</p>
-          </Col>
-        </Row>
-        <Row class-name="bottom-content">
-          <Col span="2">
-            <Icon type="md-eye"></Icon>1
-          </Col>
-          <Col span="2">
-            <Icon type="ios-chatbubbles"></Icon>2
-          </Col>
-          <Col span="8" offset="12">
-            <router-link to="/about" tag="Button">查看全文</router-link>
-          </Col>
-        </Row>
-      </div>
-      <div class="clear"></div>
-    </Card>
+    <transition-group enter-active-class="animated fadeInUp" tag="p" appear>
+      <Card v-for="i in data" :key="i.id" :padding="16">
+        <p slot="title">
+          <!-- <Icon type="md-book"></Icon> -->
+          {{i.title}}
+        </p>
+        <p v-if="i.update_time!=''" slot="extra">updated by
+          <Icon type="ios-contact"></Icon>
+          {{i.update_time}}
+        </p>
+        <p v-else slot="extra">created by
+          <Icon type="ios-contact"></Icon>
+          {{i.create_time}}
+        </p>
+        <div v-if="i.img" class="img-box" :style="'background-image:url('+i.img+')'"></div>
+        <div class="content-box" :class="{ 'have-img': i.img }">
+          <Row class-name="tag-row">
+            <Col span="24">
+              <span>标签：</span>
+              <!-- <Tag v-for="it in i.tags" :key="it" color="blue">{{it}}</Tag> -->
+              <Tag
+                v-if="i.tags.length>0"
+                v-for="it in i.tags"
+                :key="it"
+                :color="getRandomColor()"
+              >{{it}}</Tag>
+              <Tag v-if="i.tags.length<=0" type="border">无</Tag>
+            </Col>
+          </Row>
+          <Row class-name="main-content">
+            <Col span="24">
+              <p>{{i.content}}</p>
+            </Col>
+          </Row>
+          <Row class-name="bottom-content">
+            <Col span="2" class-name="align-left">
+              <i class="fas fa-eye fa-sm"></i>
+              1
+            </Col>
+            <Col span="2" class-name="align-left">
+              <i class="fas fa-comment-dots fa-sm"></i> 0
+              <!-- <fa icon="comment-dots" size="sm"/> -->
+            </Col>
+            <Col span="8" offset="12">
+              <router-link :to="'/article?title='+i.title" tag="Button">查看全文</router-link>
+            </Col>
+          </Row>
+        </div>
+        <div class="clear"></div>
+      </Card>
     </transition-group>
   </div>
 </template>
@@ -46,10 +59,10 @@ export default {
   props: {
     data: Array
   },
-  data(){
-    return{
-      titleImg:true,
-    }
+  data() {
+    return {
+      // titleImg: true
+    };
   }
 };
 </script>
@@ -62,19 +75,26 @@ export default {
     .ivu-card-head p {
       color: #3b404b;
       font-size: 18px;
+      padding-right: 230px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis; /* 溢出的部分用省略号替代*/
     }
   }
   .img-box {
     width: 192px;
     height: 108px;
-    border: 1px dotted #cccccc;
+    // border: 1px dotted #dddddd;
     float: left;
+    background-size: contain;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
   }
   .content-box {
     float: left;
     padding-left: 20px;
     width: 100%;
-    .main-content {
+    .main-content p{
       margin: 14px 0;
       white-space: nowrap;
       overflow: hidden;
@@ -96,6 +116,5 @@ export default {
     width: calc(100% - 192px);
   }
 }
-
 </style>
 

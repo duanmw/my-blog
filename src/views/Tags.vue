@@ -1,51 +1,49 @@
  <template>
-  <div class="tags">
-    <h1>All Tags</h1>
-    <button v-on:click="shuffle">Shuffle</button>
-    <br>
-    <transition-group name="list-complete" tag="p" appear>
-      <!-- <transition-group enter-active-class="animated bounceInDown" name="list-complete" tag="p" appear> -->
-      <Tag
-        v-for="i in list"
-        :key="i"
-        :color="i==model13?'success':getRandomColor()"
-        @click.native="setValue(i)"
-        class="list-complete-item"
-      >{{i}}</Tag>
-    </transition-group>
-    <transition name="onetag">
-      <div v-if="model13">
-        <span>标签：</span>
-        <Tag closable color="success" @on-close="handleClose2" style="margin-left:20px">{{model13}}</Tag>
-      </div>
-    </transition>
-    <InfoCard v-if="model13" :data="cardlist"></InfoCard>
+  <div>
+    <div class="tags">
+      <h1>All Tags</h1>
+      <!-- <button v-on:click="shuffle">Shuffle</button> -->
+      <br>
+      <transition-group name="list-complete" tag="p" appear>
+        <!-- <transition-group enter-active-class="animated bounceInDown" name="list-complete" tag="p" appear> -->
+        <Tag
+          v-for="i in list"
+          :key="i"
+          :color="i==model13?'success':getRandomColor()"
+          @click.native="setValue(i)"
+          class="list-complete-item"
+        >{{i}}</Tag>
+      </transition-group>
+      <transition name="onetag">
+        <div v-if="model13">
+          <span>标签：</span>
+          <Tag
+            closable
+            color="success"
+            @on-close="handleClose2"
+            style="margin-left:20px"
+          >{{model13}}</Tag>
+        </div>
+      </transition>
+      <InfoCard v-if="model13" :data="cardlist"></InfoCard>
+    </div>
+    <Footer></Footer>
   </div>
 </template>
 <script>
 import _ from "lodash/lodash"; // 引入lodash.js
 import InfoCard from "../components/InfoCard.vue";
+import Footer from "../components/Footer.vue";
 export default {
   name: "Tags",
   components: {
-    InfoCard
+    InfoCard,
+    Footer
   },
   data() {
     return {
       model13: "",
       loading1: false,
-      colorArr: [
-        "red",
-        "magenta",
-        "volcano",
-        "orange",
-        "gold",
-        "green",
-        "cyan",
-        "blue",
-        "geekblue",
-        "purple"
-      ],
       list: ["Alabama", "Alas", "Arizona", "Arkansasf", "bizona", "bcansas"],
       cardlist: [
         {
@@ -82,10 +80,10 @@ export default {
         this.list.unshift(val);
       }
     },
-    getRandomColor() {
-      return this.colorArr[Math.floor(Math.random() * this.colorArr.length)];
-      // return this.colorArr[1]
-    },
+    // getRandomColor() {
+    //   return this.colorArr[Math.floor(Math.random() * this.colorArr.length)];
+    //   // return this.colorArr[1]
+    // },
     shuffle() {
       this.list = _.shuffle(this.list);
     }
@@ -99,6 +97,7 @@ export default {
  <style lang="less" scoped>
 .tags {
   min-width: 720px;
+  min-height: 450px;
   padding: 15px;
   overflow: hidden;
   background: #fff;
@@ -109,7 +108,7 @@ export default {
   > p {
     width: 50%;
     margin: 0 auto;
-    border: 1px dotted rgb(143, 143, 212);
+    // border: 1px dotted rgb(143, 143, 212);
     border-radius: 10px;
     text-align: center;
     .list-complete-item {
@@ -117,14 +116,9 @@ export default {
       margin: 10px;
     }
   }
-  .list-complete-enter-active,
-  .list-complete-leave-active {
-    // transition: all 1s;
-  }
   .list-complete-enter {
     opacity: 0.5;
   }
-
   .onetag-enter-active,
   .onetag-leave-active {
     transition: all 0.4s;

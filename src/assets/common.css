@@ -1,3 +1,6 @@
+html,body{
+  height:100%;
+}
 .clearfix::after {
   content: ".";
   display: block;
@@ -8,9 +11,32 @@
 .clear {
   clear: both;
 }
-html,body{
-  height:100%;
+.align-left{
+  text-align: left;
 }
-/* body{
-  height:100%;
-} */
+.align-center{
+  text-align: center;
+}
+.line{
+  border-top: 1px solid #cccccc;
+  width: 98%;
+  margin: 6px auto;
+}
+
+.ivu-btn-primary {
+  color: #409eff;
+  background: #ecf5ff;
+  border-color: #b3d8ff;
+}
+.ivu-btn-primary:hover {
+  background: #409eff;
+  border-color: #409eff;
+  color: #fff;
+}
+
+.create .ivu-input-default{
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  text-indent: -80px;
+}
